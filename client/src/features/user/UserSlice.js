@@ -115,6 +115,7 @@ export const userSlice = createSlice({
                 state.isLoading = true
             })
             .addCase(deleteUser.fulfilled, (state, action) => {
+                state.user = null
                 state.isLoading = false
                 state.isSuccess = true
                 state.message = action.payload

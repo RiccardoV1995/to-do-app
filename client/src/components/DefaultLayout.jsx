@@ -11,11 +11,12 @@ const DefaultLayout = () => {
   const {user} = useSelector(state => state.user)
 
   useEffect(() => {
-    dispatch(reset())
     if (!user) {
       navigate('/login')
     }
-  }, [user, navigate])
+
+    dispatch(reset())
+  }, [user, navigate, dispatch])
 
   const logoutComand = () => {
     dispatch(logout())

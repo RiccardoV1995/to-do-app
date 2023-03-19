@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/UserModel')
+const Todo = require('../models/TodoModel')
+const Category = require('../models/CategoryModel')
 
 const generateToken = (id) => jwt.sign({id}, process.env.SECRET)
 
@@ -148,9 +150,12 @@ const updatePassword = async (req, res) => {
 // Private
 const deleteUser = async (req, res) => {
     try {
-        await User.findByIdAndDelete(req.user)
+        const user = await User.findByIdAndDelete(req.user)
 
-        res.json({msg: 'Utente rimosso'})
+        await Todo.deleteMany({user: req.user})
+        await Category.deleteMany({user: req.user})
+
+        res.json(user)
     } catch (err) {
         console.log(err)
         res.status(500).json({msg: 'Server error'})
