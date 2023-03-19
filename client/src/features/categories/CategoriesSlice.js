@@ -68,12 +68,17 @@ export const CategoriesSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(createCategory.pending, (state) => {
-                    state.isLoading = true
+                state.isLoading = true
                 })
             .addCase(createCategory.rejected, (state, actions) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = actions.payload
+            })
+            .addCase(createCategory.fulfilled, (state, actions) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.categories.push(actions.payload)
             })
             .addCase(getCategories.pending, (state) => {
                 state.isLoading = true

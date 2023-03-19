@@ -112,6 +112,11 @@ export const TodosSlice = createSlice({
                 state.isError = true
                 state.message = actions.payload
             })
+            .addCase(createTodo.fulfilled, (state, actions) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.todos.push(actions.payload)
+            })
             .addCase(deleteTodo.pending, (state) => {
                 state.isLoading = true
             })
